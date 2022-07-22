@@ -1,0 +1,48 @@
+
+body {
+    background-color: #555;
+    font-family: "point";
+    color: white;
+    font-size: 20pt;
+}
+
+#screen {
+    background-color: black;
+    width: 400px;
+    height: 340px;
+    margin: auto;
+    position: relative;
+}
+
+#score {
+    padding-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+}
+
+#ball, #player1, #player2 {
+    position: absolute;
+    border: 1px solid white;
+}
+
+#player1, #player2 {
+    width: 19px;
+    height: calc(3 * 19px);
+}
+
+#ball {
+    width: 19px;
+    height: 19px;
+    background-color: yellow;
+}
+
+#player1 {
+    background-color: blue;
+}
+
+#player2 {
+    background-color: red;
+}
+
