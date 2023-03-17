@@ -9,7 +9,7 @@ function start() {
   if (canvas.getContext) {
     const context = canvas.getContext("2d")
     const game = new Game()
-    game.run()
+    game.start(context)
   }
 
 }
