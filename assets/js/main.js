@@ -1,4 +1,4 @@
-
+//method start
 const start = () => {
   //canvas
   const canvas = document.getElementById("canvas")
@@ -8,7 +8,12 @@ const start = () => {
 
   if (canvas.getContext) {
     const context = canvas.getContext("2d")
+    render_game(context)
   }
+}
+
+//render game
+const render_game = (ctx) => {
 }
 
 window.addEventListener("load", start)
