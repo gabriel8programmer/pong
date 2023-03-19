@@ -1,17 +1,14 @@
 
-import Game from "./Game.js"
-
-function start() {
-  //get object of the canvas
+const start = () => {
+  //canvas
   const canvas = document.getElementById("canvas")
+  //control players
+  const btns_player1 = [...document.querySelectorAll("#control-player1 button")]
+  const btns_player2 = [...document.querySelectorAll("#control-player2 button")]
 
-  //test if canvas is running
   if (canvas.getContext) {
     const context = canvas.getContext("2d")
-    const game = new Game()
-    game.start(context)
   }
-
 }
 
 window.addEventListener("load", start)

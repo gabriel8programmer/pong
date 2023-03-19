@@ -3,8 +3,13 @@ body {
   color: white;
   padding: 0;
   margin: 0;
-  height: 600px;
+}
+
+/*game*/
+#game {
+  height: 550px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -14,4 +19,53 @@ body {
 
   border: 1px solid #fff;
   background-color: #000;
+}
+
+/*controls*/
+#controls {
+  margin-top: 50px;
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/*control*/
+.control {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 115px;
+}
+
+.control button {
+  width: 50px;
+  height: 50px;
+  font-size: 25px;
+  border: 5px solid #0000;
+  background-clip: padding-box;
+  border-radius: 10px;
+  outline: 1px solid #fff;
+  color: white;
+  text-shadow: 2px 2px 1px #000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.control button:hover {
+  cursor: pointer;
+}
+
+.control button:active {
+  transition: .5;
+  transform: scale(80%)
+}
+
+/*control of the player1*/
+#control-player1 button {
+  background-color: #0d5;
+}
+
+#control-player2 button {
+  background-color: #d50;
 }

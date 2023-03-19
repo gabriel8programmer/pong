@@ -7,14 +7,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pong</title>
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <script src="./assets/js/main.js" type="module"></script>
+    <script src="./assets/js/main.js"></script>
 </head>
 
 <body>
 
-    <canvas id="canvas" width="480" height="400">
-        <p>Your Browser not supported canvas :(</p>
-    </canvas>
+    <main id="game">
+
+        <canvas id="canvas" width="350" height="270">
+            <p>Your Browser not supported canvas :(</p>
+        </canvas>
+
+        <!--control-->
+        <div id="controls">
+
+            <!--player 1-->
+            <div id="control-player1" class="control">
+
+                <button class="up" id="player1-up">&uarr;</button>
+                <button class="down" id="player1-down">&darr;</button>
+
+            </div>
+
+            <!--player 2-->
+            <div id="control-player2" class="control">
+
+                <button class="up" id="player2-up">&uarr;</button>
+                <button class="down" id="player2-down">&darr;</button>
+
+            </div>
+
+        </div>
+        <!--end control-->
+
+    </main>
 
 </body>
 
