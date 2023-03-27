@@ -7,6 +7,7 @@ const HEIGHT = 270;
 const FPS = 30;
 const SPEED = 5;
 const SIZE_OBJECT = 15;
+const LENGHT_PLAYER = 4;
 
 //objects of the game
 const players = new Array(2);
@@ -40,9 +41,21 @@ function Ball(x, y, size, color) {
   }
 }
 
+//define the center screen
 const get_center = () => {
   return [Math.round(WIDTH / 2),
   Math.round(HEIGHT / 2)];
+}
+
+//define from the position center in player
+const get_center_player = ()=> {
+  return get_center()[1] - ((SIZE_OBJECT*LENGHT_PLAYER)/2);
+}
+
+//define from the position center in player
+const get_center_ball = ()=> {
+  return [get_center()[0] - SIZE_OBJECT/2,
+          get_center()[1] - SIZE_OBJECT/2];
 }
 
 //method start
@@ -56,11 +69,11 @@ const start = () => {
   //create objects of the game
 
   //players
-  players[0] = new Player(0, get_center()[1], SIZE_OBJECT, 4, "blue");
-  players[1] = new Player(WIDTH - SIZE_OBJECT, get_center()[1], SIZE_OBJECT, 4, "red");
+  players[0] = new Player(0, get_center_player(), SIZE_OBJECT, LENGHT_PLAYER, "blue");
+  players[1] = new Player(WIDTH - SIZE_OBJECT, get_center_player(), SIZE_OBJECT, LENGHT_PLAYER, "red");
 
   //ball
-  ball = new Ball(get_center()[0], get_center()[1], SIZE_OBJECT, "yellow");
+  ball = new Ball(get_center_ball()[0], get_center_ball()[1], SIZE_OBJECT, "yellow");
 
   if (canvas.getContext) {
     const context = canvas.getContext("2d");
