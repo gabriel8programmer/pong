@@ -1,109 +1,112 @@
 
-//variables
+//variables, consts and elements's dom
+
+//canvas element
+const canvas = document.getElementById("canvas");
+//player1's buttons
+const btn_up_p1 = document.getElementById("btn-up-p1");
+const btn_down_p1 = document.getElementById("btn-down-p1");
+//player2's buttons
+const btn_up_p2 = document.getElementById("btn-up-p2");
+const btn_down_p2 = document.getElementById("btn-down-p2");
 
 //game
-const WIDTH = 350;
-const HEIGHT = 270;
-const FPS = 30;
-const SPEED = 5;
-const SIZE_OBJECT = 15;
-const LENGHT_PLAYER = 4;
+const WIDTH = canvas.width;
+const HEIGHT = canvas.height;
 
-//objects of the game
-const players = new Array(2);
-let ball = new Object();
+//create context for to draw in game's screen
+const context = canvas.getContext("2d");
 
-//this function create a player in game
-function Player(x, y, size, mult, color) {
+//array with the game's players
+const players = [];
+
+//literal object
+const ball = {
+  x: 0,
+  y: 0,
+  init_x: 0,
+  init_y: 0,
+  dir_x: 0,
+  dir_y: 0,
+  speed: 1,
+  width: 0,
+  height: 0,
+  color: "white"
+}
+
+//player's class
+function Player(x, y) {
   this.x = x;
   this.y = y;
-  this.size = size;
-  this.mult = mult;
-  this.color = color;
-  this.height = Math.round(this.size * this.mult);
+  this.width = 0;
+  this.height = 0;
+}
 
-  this.draw = function (ctx) {
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y, this.size, this.height);
+//render the game
+const render_game = (context) => {
+  //clear game's screen
+  context.clearRect(0, 0, WIDTH, HEIGHT);
+  //render ball
+  context.beginPath();
+  context.fillStyle = ball.color;
+  context.fillRect(ball.x, ball.y, ball.width, ball.height);
+  context.closePath();
+}
+
+//move ball
+const update_position_ball = () => {
+  //test ball's position in x
+  if (ball.x >= (WIDTH - ball.width)) {
+    ball.dir_x = -1;
+  }
+  else if (ball.x < 0) {
+    ball.dir_x = 1;
+  }
+  //test ball's position in y
+  if (ball.y > (HEIGHT - ball.height)) {
+    ball.dir_y = -1;
+  }
+  else if (ball.y < 0) {
+    ball.dir_y = 1;
   }
 }
 
-//this function create a ball in game
-function Ball(x, y, size, color) {
-  this.x = x;
-  this.y = y;
-  this.size = size;
-  this.color = color;
+//update the game
+const update_game = () => {
 
-  this.draw = function (ctx) {
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y, this.size, this.size);
-  }
+  //update ball
+  ball.move();
+  update_position_ball();
 }
 
-//define the center screen
-const get_center = () => {
-  return [Math.round(WIDTH / 2),
-  Math.round(HEIGHT / 2)];
+//run the game
+const run_game = () => {
+  render_game(context);
+  update_game();
+  requestAnimationFrame(run_game);
 }
 
-//define from the position center in player
-const get_center_player = ()=> {
-  return get_center()[1] - ((SIZE_OBJECT*LENGHT_PLAYER)/2);
-}
-
-//define from the position center in player
-const get_center_ball = ()=> {
-  return [get_center()[0] - SIZE_OBJECT/2,
-          get_center()[1] - SIZE_OBJECT/2];
-}
-
-//method start
+//start the game
 const start = () => {
-  //canvas
-  const canvas = document.getElementById("canvas");
-  //control players
-  const btns_player1 = [...document.querySelectorAll("#control-player1 button")];
-  const btns_player2 = [...document.querySelectorAll("#control-player2 button")];
 
-  //create objects of the game
+  //init ball
+  ball.width = 15;
+  ball.height = 15;
+  ball.init_x = Math.round((WIDTH / 2) - (ball.width / 2));
+  ball.init_y = Math.round((HEIGHT / 2) - (ball.height / 2));
+  ball.x = ball.init_x;
+  ball.y = ball.init_y;
+  ball.dir_x = 1;
+  ball.dir_y = -1;
 
-  //players
-  players[0] = new Player(0, get_center_player(), SIZE_OBJECT, LENGHT_PLAYER, "blue");
-  players[1] = new Player(WIDTH - SIZE_OBJECT, get_center_player(), SIZE_OBJECT, LENGHT_PLAYER, "red");
-
-  //ball
-  ball = new Ball(get_center_ball()[0], get_center_ball()[1], SIZE_OBJECT, "yellow");
-
-  if (canvas.getContext) {
-    const context = canvas.getContext("2d");
-    render_game(context);
+  //function for to move the ball
+  ball.move = () => {
+    ball.x += (ball.speed * ball.dir_x);
+    ball.y += (ball.speed * ball.dir_y);
   }
+
+  //run game
+  run_game();
 }
 
-//render the players in screen of the game
-const render_players = (players, ctx) => {
-  players.map(player => {
-    ctx.beginPath();
-    player.draw(ctx);
-    ctx.closePath();
-  })
-}
-
-//render the ball in screen of the game
-const render_ball = (ball, ctx) => {
-  ctx.beginPath();
-  ball.draw(ctx);
-  ctx.closePath();
-}
-
-//render game
-const render_game = (ctx) => {
-
-  //render
-  render_players(players, ctx);
-  render_ball(ball, ctx);
-
-}
-
-window.addEventListener("load", start)
+window.addEventListener("load", start);

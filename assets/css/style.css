@@ -1,13 +1,19 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
 body {
   background-color: #222;
   color: white;
-  padding: 0;
-  margin: 0;
+  height: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /*game*/
 #game {
-  height: 550px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,9 +22,8 @@ body {
 
 /*simple formatting for canvas*/
 #canvas {
-
   border: 1px solid #fff;
-  background-color: #000;
+  background-color: #111;
 }
 
 /*controls*/
@@ -47,7 +52,7 @@ body {
   outline: 1px solid #fff;
   color: white;
   text-shadow: 2px 2px 1px #000;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -58,7 +63,7 @@ body {
 
 .control button:active {
   transition: .5;
-  transform: scale(80%)
+  transform: scale(80%);
 }
 
 /*control of the player1*/
