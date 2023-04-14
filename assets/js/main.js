@@ -19,6 +19,8 @@ const context = canvas.getContext("2d");
 
 //array with the game's players
 const players = [];
+let ball_1 = null;
+
 
 //literal object
 const ball = {
@@ -29,17 +31,18 @@ const ball = {
   dir_x: 0,
   dir_y: 0,
   speed: 1,
-  width: 0,
-  height: 0,
+  width: 15,
+  height: 15,
   color: "white"
 }
 
 //player's class
-function Player(x, y) {
-  this.x = x;
-  this.y = y;
-  this.width = 0;
-  this.height = 0;
+function Player() {
+  this.x = 0;
+  this.y = 0;
+  this.width = 15;
+  this.height = 15 * 4;
+  this.color = "white";
 }
 
 //render the game
@@ -51,6 +54,14 @@ const render_game = (context) => {
   context.fillStyle = ball.color;
   context.fillRect(ball.x, ball.y, ball.width, ball.height);
   context.closePath();
+
+  //render players
+  players.map(player => {
+    context.beginPath();
+    context.fillStyle = player.color;
+    context.fillRect(player.x, player.y, player.width, player.height);
+    context.closePath();
+  });
 }
 
 //move ball
@@ -90,14 +101,25 @@ const run_game = () => {
 const start = () => {
 
   //init ball
-  ball.width = 15;
-  ball.height = 15;
   ball.init_x = Math.round((WIDTH / 2) - (ball.width / 2));
   ball.init_y = Math.round((HEIGHT / 2) - (ball.height / 2));
   ball.x = ball.init_x;
   ball.y = ball.init_y;
   ball.dir_x = 1;
   ball.dir_y = -1;
+  ball.color = "#ff0";
+
+  //init players
+  players[0] = new Player();
+  players[1] = new Player();
+  //config player1
+  players[0].x = 0;
+  players[0].y = Math.round((HEIGHT / 2) - (players[0].height / 2));
+  players[0].color = "#00f";
+  //config player2
+  players[1].x = WIDTH - players[1].width;
+  players[1].y = Math.round((HEIGHT / 2) - (players[1].height / 2));
+  players[1].color = "#f00";
 
   //function for to move the ball
   ball.move = () => {
