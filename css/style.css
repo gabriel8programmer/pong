@@ -4,6 +4,7 @@
 }
 
 body {
+  background-color: #000;
   overflow: hidden;
   height: 100vh;
   display: flex;
@@ -14,14 +15,14 @@ body {
 
 #canvas {
   border: 1px solid #fff;
+  background-color: #0004;
 }
 
 /*controls*/
 
 .buttons {
   width: 400px;
-  display: flex;
-  justify-content: space-between;
+  display: none;
 }
 
 .button {
@@ -57,4 +58,18 @@ body {
 .button button svg {
   fill: #fff;
   font-size: 20px;
+}
+
+/*simple responsive*/
+@media (max-width: 450px) {
+  #canvas {
+    transform-origin: 50%;
+    transform: rotate(90deg);
+  }
+
+  .buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+  }
 }
