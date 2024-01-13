@@ -2,6 +2,10 @@
 const $canvas = document.querySelector("canvas");
 const ctx = $canvas.getContext("2d");
 
+//objects for score
+const player1Score = document.querySelector("#player1Score");
+const player2Score = document.querySelector("#player2Score");
+
 //consts
 const WIDTH = $canvas.width;
 const HEIGHT = $canvas.height;
@@ -21,7 +25,7 @@ const initGame = () => {
         color: "yellow",
         dx: 1,
         dy: -1,
-        velocity: 1
+        velocity: .5
     }
 
     //players
@@ -39,6 +43,7 @@ const initGame = () => {
         up: false,
         down: false,
         keys: ["W", "S"],
+        score: 0,
     }
 
     //init object player2
@@ -53,6 +58,7 @@ const initGame = () => {
         up: false,
         down: false,
         keys: ["ArrowUp", "ArrowDown"],
+        score: 0,
     }
 
 }
@@ -82,12 +88,48 @@ const drawGame = () => {
     //draw player 2
     drawRect(p2.x, p2.y, p2.width, p2.height, p2.color);
 
+    //draw score
+    player1Score.innerText = p1.score;
+    player2Score.innerText = p2.score;
+
 }
 
 const updateMovementBall = () => {
     //movement
     ball.x += (ball.velocity * ball.dx);
     ball.y += (ball.velocity * ball.dy);
+}
+
+const restartAll = () => {
+    //restart ball
+    ball.x = WIDTH / 2;
+    ball.y = HEIGHT / 2;
+    ball.velocity = .5;
+    ball.dx *= -1;
+
+    //player1
+    p1.y = HEIGHT / 2;
+    p1.velocity = 1;
+
+    //player2
+    p2.y = HEIGHT / 2;
+    p2.velocity = 1;
+}
+
+const incrementScore = (p) => {
+    p.score++;
+}
+
+const checkBallExited = ()=> {
+
+    //increment score
+    if (ball.x < p1.x){
+        restartAll();
+        incrementScore(p2);
+    } else if (ball.x > p2.x + p2.width){
+        restartAll();
+        incrementScore(p1);
+    }
 }
 
 const checkColisionBallWithLimit = () => {
@@ -97,14 +139,34 @@ const checkColisionBallWithLimit = () => {
         ball.dy *= -1;
     }
 
-    //test colision of the ball in x
-    if (ball.x < 0 || ball.x > WIDTH - ball.width){
-        ball.dx *= -1;
-    }
+    //check if the ball is exited
+   checkBallExited();
 
 }
 
+const collidedWithPlayerInY = (p) => {
+    return ball.x < p.x + p.width &&
+           ball.x + ball.width > p.x &&
+           ball.y < p.y + p.height &&
+           ball.y + ball.height > p.y
+}
+
+const incrementVelocity = (obj, inc, limit) => {
+    if (obj.velocity >= limit) return;
+    obj.velocity += inc;
+}
+
 const checkColisionBallWithPlayer = () => {
+    
+    if (collidedWithPlayerInY(p1)){
+        ball.dx *= -1;
+        incrementVelocity(ball, .1, 3);
+        incrementVelocity(p1, .5, 5);
+    } else if (collidedWithPlayerInY(p2)){
+        ball.dx *= -1;
+        incrementVelocity(ball, .1, 3);
+        incrementVelocity(p2, .5, 5);
+    }
 
 }
 
@@ -172,11 +234,11 @@ const checkKeyPressedInPlayer = (key, p, state) => {
 
     //test keys player
     //move up
-    if (key.toString().toUpperCase() === p.keys[0].toUpperCase()){
+    if (key.toString().toUpperCase() === p.keys[0].toUpperCase() && p.y >= 0){
         p.up = state;
     }
     //move down
-    if (key.toString().toUpperCase() === p.keys[1].toUpperCase()){
+    if (key.toString().toUpperCase() === p.keys[1].toUpperCase() && p.y <= HEIGHT - p.height){
         p.down = state;
     }
 
