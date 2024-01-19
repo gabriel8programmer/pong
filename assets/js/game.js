@@ -43,33 +43,54 @@ class Game {
         this.ball.dx = 1;
         this.ball.dy = -1;
 
+        //init positions and speed
+        this.ball.initX = this.ball.x;
+        this.ball.initY = this.ball.y;
+        this.ball.initSpeed = this.ball.speed;
+
         //move ball
         this.ball.move = () => {
             this.ball.x += (this.ball.speed * this.ball.dx);
             this.ball.y += (this.ball.speed * this.ball.dy);
         }
 
-        this.ball.changeDir = ()=> {
+        this.ball.changeDirY = ()=> {
             this.ball.dy *= -1;
         }
 
-        this.checkBallExited = ()=> {
-            return (this.ball.x < -this.ball.w || this.ball.x > this.width);
+        this.ball.changeDirX = ()=> {
+            this.ball.dx *= -1;
         }
 
-        //check if the ball exited on the limit of the screen
+        this.ball.isInLimit = ()=> {
+            return this.ball.y < 0 || this.ball.y > this.height - this.ball.h;
+        }
+
+        this.ball.exitedScreen = ()=> {
+            return this.ball.x > this.width || this.ball.x < -this.ball.width;
+        }
+
         this.ball.checkPosition = () => {
-
-        }
+            if (this.ball.isInLimit()){
+                this.ball.changeDirY();
+            }
+        } 
 
         //check if there was a collision with a player
-        this.ball.checkHitPlayer = (p)=> {
+        this.ball.hitPlayer = (p)=> {
             return (
                 this.ball.x < p.x + p.w &&
                 this.ball.x + this.ball.w < p.x &&
                 this.ball.y < p.y + p.h &&
                 this.ball.y - this.ball.h > p.y
             );
+        }
+
+        //reset for ball
+        this.ball.reset = ()=> {
+            this.ball.x = this.ball.initX;
+            this.ball.y = this.ball.initY;
+            this.ball.speed = this.ball.initSpeed;
         }
 
         //create the function for to update the ball
@@ -98,9 +119,14 @@ class Game {
         this.players.map(p => {
 
             //control directions
-            p.velocity = 5;
+            p.velocity = 3;
             p.up = false;
             p.down = false;
+
+            //init positions
+            p.initY = p.y;
+
+            console.log(p.initY);
 
             //to move player
             p.move = (vy) => {
@@ -126,9 +152,21 @@ class Game {
                 }
             }
 
+            //check if the player is colliding with a ball
+            p.checkHitball = () => {
+                if (this.ball.hitPlayer(p)){
+                    this.ball.changeDirX();
+                }
+            }
+
+            p.reset = ()=> {
+                this.y = p.initY;
+            }
+
             p.update = () => {
                 p.control();
                 p.checkHitLimit();
+                p.checkHitball();
             }
         })
     }
@@ -198,12 +236,21 @@ class Game {
         this.players.map(p => p.render(this.ctx));
     }
 
+    checkBall = () => {
+        if (this.ball.exitedScreen()){
+            this.ball.reset();
+            this.players.map(p => p.reset);
+        }
+    }
+
     update = () => {
 
         //update the state of the ball
         this.ball.update();
         //update the players
         this.players.map(p => p.update());
+        //reset the ball and players
+        this.checkBall();
     }
 
     run = () => {
