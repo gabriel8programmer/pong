@@ -1,13 +1,12 @@
 
-//instanciate new object game
-const gameInstance = new Game(game);
-gameInstance.init();
+//import game
+import Game from "./game.js";
 
-//key's events
-document.addEventListener("keydown", gameInstance.controlKeyDown);
-document.addEventListener("keyup", gameInstance.controlKeyUp);
+//get canvas
+const canvas = document.querySelector("#canvas");
 
-//button's events
-const { start } = game;
-start.addEventListener("click", gameInstance.controlClick);
+//create object for the game
+const game = new Game(canvas);
 
+//init game
+game.init();
