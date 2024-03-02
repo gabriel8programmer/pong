@@ -221,7 +221,7 @@ function Game(canvas, keyboard) {
     // Function to render the game
     this.render = function () {
         // Update context color
-        this.drawRect(0, 0, this.width, this.height, "#000"); // Black background
+        this.drawRect(0, 0, this.width, this.height, "#0005"); // Black background
 
         //render score
         this.renderScore();
