@@ -1,14 +1,27 @@
 
 function Keyboard(){
+    this.keyPressed = null;
 
-    this.keydown = function(callback){
-        document.addEventListener("keydown", callback);
+    this.setKeyPressed = function(keyPressed) {
+        this.keyPressed = keyPressed;
     }
 
-    this.keyup = function(callback){
-        document.addEventListener("keyup", callback);
+    this.getKeyPressed = function(){
+        return this.keyPressed;
+    }
+
+    this.keydown = function(e){
+        const key = e.key;
+        this.setKeyPressed(key);
+    }.bind(this);
+
+    this.keyup = function(e){
+        this.setKeyPressed(null);
+    }.bind(this);
+
+    this.init = function(){
+        document.addEventListener("keydown", this.keydown);
+        document.addEventListener("keyup", this.keyup);
     }
 
 }
-
-export default Keyboard;

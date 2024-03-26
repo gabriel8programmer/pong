@@ -12,6 +12,10 @@ body{
     background-repeat: no-repeat;
 }
 
+#canvas {
+    background-color: black;
+}
+
 /*responsivity*/
 @media (min-width: 1024px){
     body {
