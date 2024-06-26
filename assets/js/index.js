@@ -1,8 +1,6 @@
 
-//import game
-import Game from "./game.js";
-import Keyboard from "./keyboard.js";
-
+import Keyboard from "./Keyboard.js";
+import Game from "./GameObj.js";
 
 //get canvas
 const canvas = document.querySelector("#canvas");
