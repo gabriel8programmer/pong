@@ -1,5 +1,5 @@
 
-import Keyboard from "./Keyboard.js";
+import Keyboard from "./keyboard.js";
 import Game from "./GameObj.js";
 
 //get canvas
