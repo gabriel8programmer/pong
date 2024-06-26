@@ -3,25 +3,33 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: Roboto;
 }
 
 body{
-    background: url("../img/background.jpg");
+    background: linear-gradient(#000, #0005, #000), url("../img/background.jpg");
     background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
 }
 
 #canvas {
     background-color: black;
 }
 
+body {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+h1 {
+    font-size: 5rem;
+    color: #fff;
+}
+
 /*responsivity*/
 @media (min-width: 1024px){
-    body {
-        display: flex;
-        height: 100vh;
-        align-items: center;
-        justify-content: center;
-    }
+    
 }

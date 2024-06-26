@@ -1,25 +1,31 @@
-function Game(canvas, keyboard) {
-    // Getting canvas width and height
-    this.keyboard = keyboard;
-    this.width = canvas.width;
-    this.height = canvas.height;
-    this.ts = 10; //tileSize
-    this.lp = 4; //length player
 
-    // Getting 2D context
-    this.ctx = canvas.getContext("2d");
+import Ball from "./BallObj.js"
+import Player from "./PlayerObj.js";
 
-    // Game state
-    this.running = true;
-
-    //objects
-    this.p1 = null;
-    this.p2 = null;
-    this.ball = null;
-    this.players = null;
+class Game {
+    constructor(canvas, keyboard){
+        // Getting canvas width and height
+        this.keyboard = keyboard;
+        this.width = canvas.width;
+        this.height = canvas.height;
+        this.ts = 10; //tileSize
+        this.lp = 3; //length player
+    
+        // Getting 2D context
+        this.ctx = canvas.getContext("2d");
+    
+        // Game state
+        this.running = true;
+    
+        //objects
+        this.p1 = null;
+        this.p2 = null;
+        this.ball = null;
+        this.players = null;
+    }
 
     // Initialization function
-    this.init = function () {
+    init = function () {
         // init keyboard
         this.keyboard.init();
 
@@ -56,12 +62,12 @@ function Game(canvas, keyboard) {
         this.run();
     };
 
-    this.clearRect = function(){
+    clearRect = function(){
         this.ctx.clearRect(0, 0, this.width, this.height);
     }
 
     // Function to render the game
-    this.render = function () {
+    render = function () {
         // clear the screen
         this.clearRect();
 
@@ -76,7 +82,7 @@ function Game(canvas, keyboard) {
     };
 
     // Function to update the game
-    this.update = function () {
+    update = function () {
         //udpate players
         this.players.map(p => p.updateDirection(this.keyboard.getKeyPressed()));
         this.players.map(p => p.updateMove(this.height));
@@ -91,7 +97,7 @@ function Game(canvas, keyboard) {
     };
 
     // Function to run the game
-    this.run = function () {
+    run = function () {
         if (!this.running) return;
         this.render();
         this.update();  
@@ -99,3 +105,5 @@ function Game(canvas, keyboard) {
         requestAnimationFrame(this.run.bind(this)); 
     };
 }
+
+export default Game;
